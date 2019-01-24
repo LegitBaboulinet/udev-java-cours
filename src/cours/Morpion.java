@@ -41,7 +41,7 @@ public class Morpion {
                     y = input.nextInt();
 
                     if (x < BOARD_WIDTH_HEIGHT && y < BOARD_WIDTH_HEIGHT) {
-                        if (board[x][y] == null) {
+                        if (board[y][x] == null) {
                             ok = true;
                         } else {
                             System.out.println("Cette position est déjà jouée !\nVeuillez rejouer ...");
@@ -77,8 +77,6 @@ public class Morpion {
                 break;
             case "None":
                 System.out.println("Personne n'a gagné..");
-            default:
-                System.out.println("WTF did you do ?!");
         }
     }
 
@@ -162,6 +160,11 @@ public class Morpion {
             }
         }
 
+        // Vérification des espaces vides
+        if (getFreeCells() < 3) {
+            gagnant = Roles.None;
+        }
+
         return gagnant;
     }
 
@@ -179,5 +182,17 @@ public class Morpion {
             default:
                 return Roles.None;
         }
+    }
+
+    private static int getFreeCells() {
+        int count = 0;
+        for (int i = 0; i < BOARD_WIDTH_HEIGHT; i++) {
+            for (int j = 0; j < BOARD_WIDTH_HEIGHT; j++) {
+                if (board[i][j] == null) {
+                    count++;
+                }
+            }
+        }
+        return count;
     }
 }
